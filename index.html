@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US DNC Checker - Fast & Accurate</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-shield-halved"></i>
+                    US DNC CHECKER
+                </h1>
+                <div class="badge">
+                    <i class="fas fa-bolt"></i>
+                    <span>20x FASTER • NO ERRORS</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <!-- INPUT SECTION -->
+            <div class="input-grid">
+                <!-- Paste Numbers -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-paste"></i>
+                        Paste Numbers
+                    </div>
+                    <textarea id="phoneInput" placeholder="Enter phone numbers (one per line)&#10;Example:&#10;3034708896&#10;9706527042"></textarea>
+                    <div class="info-row">
+                        <span id="inputCount">0 numbers</span>
+                        <button class="btn-clear" onclick="clearInput()">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div class="card">
+                    <div class="card-title">
+                        <i class="fas fa-file-upload"></i>
+                        Upload File
+                    </div>
+                    <div class="file-zone" id="fileZone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <input type="file" id="fileInput" accept=".txt,.csv" hidden>
+                        <p>Drag & drop or <b>browse</b></p>
+                        <p class="file-hint">.txt or .csv (one per line)</p>
+                    </div>
+                    <div class="info-row" id="fileName">
+                        <span><i class="fas fa-file"></i> No file selected</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS CARDS -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Numbers</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon dnc">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">DNC Numbers</div>
+                        <div class="stat-value" id="statDnc">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon clean">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Clean Numbers</div>
+                        <div class="stat-value" id="statClean">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="action-row">
+                <button class="btn btn-primary" id="checkBtn" onclick="window.startCheck()">
+                    <i class="fas fa-play"></i>
+                    START CHECKING
+                </button>
+                <button class="btn btn-danger" id="stopBtn" onclick="window.stopCheck()">
+                    <i class="fas fa-stop"></i>
+                    STOP
+                </button>
+                <button class="btn btn-secondary" onclick="window.resetAll()">
+                    <i class="fas fa-redo-alt"></i>
+                    RESET
+                </button>
+            </div>
+
+            <!-- PROGRESS BAR -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-stats">
+                    <span id="progressStatus">Processing: 0/0</span>
+                    <span id="progressSpeed">0/sec</span>
+                </div>
+            </div>
+
+            <!-- RESULTS GRID -->
+            <div class="results-grid" id="resultsGrid">
+                <!-- DNC CARD -->
+                <div class="result-card">
+                    <div class="result-header dnc-header">
+                        <h3>
+                            <i class="fas fa-ban"></i>
+                            DNC Numbers
+                        </h3>
+                        <div>
+                            <button class="btn-icon" onclick="window.copyResults('dnc')" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="btn-icon" onclick="window.downloadResults('dnc')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="number-list" id="dncList">
+                        <div class="empty-message">No DNC numbers yet</div>
+                    </div>
+                </div>
+
+                <!-- CLEAN CARD -->
+                <div class="result-card">
+                    <div class="result-header clean-header">
+                        <h3>
+                            <i class="fas fa-check-circle"></i>
+                            Clean Numbers
+                        </h3>
+                        <div>
+                            <button class="btn-icon" onclick="window.copyResults('clean')" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="btn-icon" onclick="window.downloadResults('clean')" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="number-list" id="cleanList">
+                        <div class="empty-message">No clean numbers yet</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOWNLOAD ALL BUTTON -->
+            <button class="download-all" id="downloadAllBtn" onclick="window.downloadAll()">
+                <i class="fas fa-download"></i>
+                Download All Results
+            </button>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <i class="fas fa-bolt"></i> 15x Faster • Parallel Processing • No Errors • CORS Fixed
+        </footer>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
